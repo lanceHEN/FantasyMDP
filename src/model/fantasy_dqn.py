@@ -48,6 +48,6 @@ class FantasyDQN(nn.Module):
         out = self.dqn(x)
         
         # Mask fully drafted positions to -inf
-        out[x[:,:NUM_POS] == 1] = float('inf')
+        out[x[:,:NUM_POS] == 1] = -float('inf')
         
         return out
