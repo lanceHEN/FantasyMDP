@@ -2,6 +2,7 @@ import random
 
 import torch
 import torch.nn as nn
+from scipy.stats import bernoulli
 
 from model import FantasyDQN
 from envs import FantasyDraftEnv
@@ -68,7 +69,7 @@ class FantasyDQNTrainer:
         
         for _ in range(steps):
             # Take a step, recording the state, action, reward, and next state
-            if warm_up:
+            if warm_up or bernoulli.rvs(p=self.epsilon):
                 action = random.sample(self.env.available_pos())
             else:
                 action_idx = torch.argmax(self.model(cur_state), dim=-1)
